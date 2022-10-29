@@ -1,0 +1,9 @@
+
+tasks:
+  - init: |
+      go build
+    command: |
+      ./ergosphere --help
+vscode:
+  extensions:
+    - golang.go
