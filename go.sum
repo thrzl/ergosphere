@@ -1,3 +1,5 @@
+github.com/karlseguin/ccache/v3 v3.0.1 h1:CUHZqX7bxMRoMjeb4VklVb1REPmGXiRGWQKt2ceJq3k=
+github.com/karlseguin/ccache/v3 v3.0.1/go.mod h1:qxC372+Qn+IBj8Pe3KvGjHPj0sWwEF7AeZVhsNPZ6uY=
 github.com/miekg/dns v1.1.50 h1:DQUfb9uc6smULcREF09Uc+/Gd46YWqJd5DbpPE9xkcA=
 github.com/miekg/dns v1.1.50/go.mod h1:e3IlAVfNqAllflbibAZEWOXOQ+Ynzk/dDozDxY7XnME=
 github.com/phuslu/fastdns v0.8.1 h1:h2/nL3Yy8jRN/Sml2URohG9F3t3kDKkWoJzMmmEB02s=
