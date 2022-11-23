@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"strconv"
 
 	"github.com/miekg/dns"
 	"github.com/karlseguin/ccache/v3"
@@ -11,6 +10,7 @@ import (
 	"io"
 	"ergosphere/utils"
 	"net"
+	flag "github.com/spf13/pflag"
 )
 
 func fetchHosts() ([]string) {
@@ -31,7 +31,8 @@ func fetchHosts() ([]string) {
 	return hosts
 }
 
-var blockList = fetchHosts()
+var dnsServer string
+var blockList []string
 var cache = ccache.New(ccache.Configure[*dns.Msg]().MaxSize(10240).ItemsToPrune(500))
 
 func handleDnsRequest(w dns.ResponseWriter, r *dns.Msg) {
@@ -79,9 +80,17 @@ func main() {
 	dns.HandleFunc(".", handleDnsRequest)
 
 	// start server
-	port := 53
-	server := &dns.Server{Addr: ":" + strconv.Itoa(port), Net: "udp"}
-	log.Printf("[i] spinning up ergosphere on port %d\n", port)
+	port := flag.String("port", "53", "port to listen on")
+	flag.StringVar(&dnsServer, "dns", "1.1.1.1", "dns server to use")
+	help := flag.Bool("help", false, "show help message")
+	flag.Parse()
+	if *help {
+		flag.PrintDefaults()
+		return
+	}
+	blockList = fetchHosts()
+	server := &dns.Server{Addr: ":" + *port, Net: "udp"}
+	log.Printf("[i] spinning up ergosphere on port %s\n", *port)
 	err := server.ListenAndServe()
 	defer server.Shutdown()
 	if err != nil {
